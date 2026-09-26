@@ -7,12 +7,34 @@
   <meta name="description" content="個人投資家同士で日本株のIPOや高配当株について気軽に意見交換できる無料のLINEグループ参加ページ。">
   <meta name="theme-color" content="#047857">
   
+  <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18341611100"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
+
     gtag('config', 'AW-18341611100');
+  </script>
+
+  <!-- Event snippet for 出站点击 conversion page -->
+  <script>
+    function gtag_report_conversion(url) {
+      var callbackCalled = false;
+      var callback = function () {
+        if (callbackCalled) return;
+        callbackCalled = true;
+        if (typeof(url) != 'undefined') {
+          window.location = url;
+        }
+      };
+      gtag('event', 'conversion', {
+          'send_to': 'AW-18341611100/84wECJT17IMdENyM-6lE',
+          'event_callback': callback
+      });
+      window.setTimeout(callback, 1200);
+      return false;
+    }
   </script>
 
   <style>
@@ -224,7 +246,7 @@
       <p>「一人での情報収集に限界を感じる…」「他の投資家はどう動いている？」そんな個人投資家の皆様が集まり、銘柄やスケジュールについて気軽に意見交換できるオープンなグループです。</p>
       
       <div class="cta-box">
-        <a class="btn-line" href="https://line.me/R/ti/p/@example" target="_blank" rel="noopener">
+        <a class="btn-line line-link" href="https://line.me/R/ti/p/@example" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M19.365 9.863c.349.03.662.115.932.253.27.138.497.324.68.558.183.234.321.505.415.813.093.308.14.64.14.997 0 .426-.06.828-.18 1.205-.12.377-.302.716-.544 1.018-.242.302-.544.558-.905.768-.361.21-.782.373-1.263.489-.481.116-1.01.174-1.587.174h-1.29v3.425h-2.125V6.435h3.69c.534 0 1.026.052 1.474.156.448.104.836.26 1.164.468.328.208.59.467.786.777.196.31.294.673.294 1.089 0 .445-.098.834-.294 1.168-.196.334-.476.604-.84.81z"/></svg>
           LINEグループに参加して意見交換する
         </a>
@@ -284,7 +306,7 @@
 
   <div class="mobile-bar">
     <div class="container" style="padding: 0;">
-      <a class="btn-line" href="https://line.me/R/ti/p/@example" target="_blank" rel="noopener" style="min-height: 48px; font-size: 0.92rem;">
+      <a class="btn-line line-link" href="https://line.me/R/ti/p/@example" target="_blank" rel="noopener" style="min-height: 48px; font-size: 0.92rem;">
         <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M19.365 9.863c.349.03.662.115.932.253.27.138.497.324.68.558.183.234.321.505.415.813.093.308.14.64.14.997 0 .426-.06.828-.18 1.205-.12.377-.302.716-.544 1.018-.242.302-.544.558-.905.768-.361.21-.782.373-1.263.489-.481.116-1.01.174-1.587.174h-1.29v3.425h-2.125V6.435h3.69c.534 0 1.026.052 1.474.156.448.104.836.26 1.164.468.328.208.59.467.786.777.196.31.294.673.294 1.089 0 .445-.098.834-.294 1.168-.196.334-.476.604-.84.81z"/></svg>
         LINEグループに参加して意見交換する
       </a>
@@ -322,6 +344,17 @@
   </dialog>
 
   <script>
+    const LINE_URL = "https://line.me/R/ti/p/@example";
+    
+    document.querySelectorAll(".line-link").forEach((link) => {
+      link.href = LINE_URL;
+      link.addEventListener("click", (event) => {
+        event.preventDefault();
+        window.dataLayer?.push({ event: "line_click", placement: link.dataset.placement || "page" });
+        gtag_report_conversion(link.href);
+      });
+    });
+
     document.querySelectorAll("[data-dialog]").forEach((button) => {
       button.addEventListener("click", () => {
         document.getElementById(`${button.dataset.dialog}-dialog`).showModal();
